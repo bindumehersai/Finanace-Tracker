@@ -66,10 +66,10 @@ const ExpenseChart: React.FC<ExpenseChartProps> = ({ data }) => {
             callbacks: {
               label: function(context) {
                 const label = context.label || '';
-                const value = context.raw;
-                const total = context.chart.data.datasets[0].data.reduce((a: number, b: number) => a + b, 0);
-                const percentage = Math.round((value as number / total) * 100);
-                return `${label}: $${value} (${percentage}%)`;
+                const value = context.raw as number;
+                const total = (context.chart.data.datasets[0].data as number[]).reduce((a, b) => a + b, 0);
+                const percentage = Math.round((value / total) * 100);
+                return `${label}: ₹${value} (${percentage}%)`;
               }
             }
           }
@@ -90,9 +90,9 @@ const ExpenseChart: React.FC<ExpenseChartProps> = ({ data }) => {
 
   if (data.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Expenses by Category</CardTitle>
+      <Card className="bg-gradient-to-b from-white to-purple-50 border-purple-100">
+        <CardHeader className="border-b border-purple-100">
+          <CardTitle className="text-purple-800">Expenses by Category</CardTitle>
         </CardHeader>
         <CardContent className="h-72 flex items-center justify-center">
           <p className="text-muted-foreground">No expense data available</p>
@@ -102,9 +102,9 @@ const ExpenseChart: React.FC<ExpenseChartProps> = ({ data }) => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Expenses by Category</CardTitle>
+    <Card className="bg-gradient-to-b from-white to-purple-50 border-purple-100">
+      <CardHeader className="border-b border-purple-100">
+        <CardTitle className="text-purple-800">Expenses by Category</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-80">

@@ -4,7 +4,7 @@ import { FinanceData, Transaction, Budget, SummaryData, CategoryTotal, ChartData
 import { toast } from "sonner";
 import { useToast } from "@/components/ui/use-toast";
 
-const STORAGE_KEY = "personal-finance-tracker";
+const STORAGE_KEY = "spendly-finance-tracker";
 
 // Default empty state
 const DEFAULT_DATA: FinanceData = {
@@ -88,17 +88,17 @@ export function useFinanceData() {
       })
     );
 
-    // Get income vs expense by month (last 6 months)
+    // Get income vs expense by month (all 12 months)
     const months: Record<string, { income: number; expense: number }> = {};
     
-    // Get date 6 months ago
-    const sixMonthsAgo = new Date();
-    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+    // Get date 12 months ago
+    const twelveMonthsAgo = new Date();
+    twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 11);
     
     // Initialize months
-    for (let i = 0; i < 6; i++) {
-      const monthDate = new Date(sixMonthsAgo);
-      monthDate.setMonth(sixMonthsAgo.getMonth() + i);
+    for (let i = 0; i < 12; i++) {
+      const monthDate = new Date(twelveMonthsAgo);
+      monthDate.setMonth(twelveMonthsAgo.getMonth() + i);
       const monthKey = `${monthDate.getFullYear()}-${(monthDate.getMonth() + 1).toString().padStart(2, '0')}`;
       months[monthKey] = { income: 0, expense: 0 };
     }

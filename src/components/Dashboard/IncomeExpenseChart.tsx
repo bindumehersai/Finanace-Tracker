@@ -36,8 +36,8 @@ const IncomeExpenseChart: React.FC<IncomeExpenseChartProps> = ({ data }) => {
           {
             label: 'Income',
             data: data.incomeData,
-            backgroundColor: 'rgba(46, 204, 113, 0.7)',
-            borderColor: 'rgba(46, 204, 113, 1)',
+            backgroundColor: 'rgba(124, 58, 237, 0.7)',
+            borderColor: 'rgba(124, 58, 237, 1)',
             borderWidth: 1,
             barPercentage: 0.6,
             categoryPercentage: 0.7,
@@ -45,8 +45,8 @@ const IncomeExpenseChart: React.FC<IncomeExpenseChartProps> = ({ data }) => {
           {
             label: 'Expenses',
             data: data.expenseData,
-            backgroundColor: 'rgba(231, 76, 60, 0.7)',
-            borderColor: 'rgba(231, 76, 60, 1)',
+            backgroundColor: 'rgba(239, 68, 68, 0.7)',
+            borderColor: 'rgba(239, 68, 68, 1)',
             borderWidth: 1,
             barPercentage: 0.6,
             categoryPercentage: 0.7,
@@ -60,7 +60,7 @@ const IncomeExpenseChart: React.FC<IncomeExpenseChartProps> = ({ data }) => {
             beginAtZero: true,
             ticks: {
               callback: function(value) {
-                return '$' + value;
+                return '₹' + value;
               }
             }
           }
@@ -74,7 +74,7 @@ const IncomeExpenseChart: React.FC<IncomeExpenseChartProps> = ({ data }) => {
               label: function(context) {
                 const label = context.dataset.label || '';
                 const value = context.raw;
-                return `${label}: $${value}`;
+                return `${label}: ₹${value}`;
               }
             }
           }
@@ -95,9 +95,9 @@ const IncomeExpenseChart: React.FC<IncomeExpenseChartProps> = ({ data }) => {
 
   if (data.labels.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Income vs. Expenses (6 Months)</CardTitle>
+      <Card className="bg-gradient-to-b from-white to-blue-50 border-blue-100">
+        <CardHeader className="border-b border-blue-100">
+          <CardTitle className="text-blue-800">Income vs. Expenses (6 Months)</CardTitle>
         </CardHeader>
         <CardContent className="h-72 flex items-center justify-center">
           <p className="text-muted-foreground">No data available</p>
@@ -107,9 +107,9 @@ const IncomeExpenseChart: React.FC<IncomeExpenseChartProps> = ({ data }) => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Income vs. Expenses (6 Months)</CardTitle>
+    <Card className="bg-gradient-to-b from-white to-blue-50 border-blue-100">
+      <CardHeader className="border-b border-blue-100">
+        <CardTitle className="text-blue-800">Income vs. Expenses (6 Months)</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-80">

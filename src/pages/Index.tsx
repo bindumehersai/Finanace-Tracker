@@ -6,6 +6,7 @@ import Sidebar from '@/components/Layout/Sidebar';
 import SummaryCards from '@/components/Dashboard/SummaryCards';
 import ExpenseChart from '@/components/Dashboard/ExpenseChart';
 import IncomeExpenseChart from '@/components/Dashboard/IncomeExpenseChart';
+import DetailedFinanceChart from '@/components/Dashboard/DetailedFinanceChart';
 import TransactionList from '@/components/Transactions/TransactionList';
 import BudgetMeter from '@/components/Budget/BudgetMeter';
 import BudgetForm from '@/components/Budget/BudgetForm';
@@ -55,11 +56,21 @@ const Index = () => {
   const expenses = data.transactions.filter(t => t.type === 'expense');
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-100 to-blue-100">
+        <div className="flex flex-col items-center">
+          <div className="bg-white rounded-full h-20 w-20 flex items-center justify-center mb-4 shadow-lg">
+            <span className="text-purple-600 font-bold text-4xl">₹</span>
+          </div>
+          <h1 className="text-2xl font-bold text-purple-800 mb-4">Spendly</h1>
+          <p className="text-purple-600">Loading your finance data...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-purple-50 to-indigo-50">
       <Header
         openTransactionForm={handleOpenTransactionForm}
         openBudgetForm={handleOpenBudgetForm}
@@ -68,7 +79,7 @@ const Index = () => {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
         
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-transparent">
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
               <SummaryCards data={summaryData} />
@@ -77,6 +88,8 @@ const Index = () => {
                 <ExpenseChart data={chartData.expensesByCategory} />
                 <IncomeExpenseChart data={chartData.incomeVsExpenseByMonth} />
               </div>
+              
+              <DetailedFinanceChart transactions={data.transactions} />
               
               <BudgetMeter
                 budgets={data.budgets}
@@ -103,7 +116,7 @@ const Index = () => {
               <div className="text-center">
                 <button
                   onClick={handleOpenBudgetForm}
-                  className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                  className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 >
                   Manage Budgets
                 </button>
@@ -114,6 +127,7 @@ const Index = () => {
           {activeTab === 'expenses' && (
             <div className="space-y-6">
               <ExpenseChart data={chartData.expensesByCategory} />
+              <DetailedFinanceChart transactions={data.transactions.filter(t => t.type === 'expense')} />
               <TransactionList
                 transactions={data.transactions.filter(t => t.type === 'expense')}
                 onAddTransaction={addTransaction}
@@ -125,14 +139,15 @@ const Index = () => {
           
           {activeTab === 'reports' && (
             <div className="space-y-6">
-              <IncomeExpenseChart data={chartData.incomeVsExpenseByMonth} />
+              <DetailedFinanceChart transactions={data.transactions} />
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <ExpenseChart data={chartData.expensesByCategory} />
-                <BudgetMeter
-                  budgets={data.budgets}
-                  expenses={expenses}
-                />
+                <IncomeExpenseChart data={chartData.incomeVsExpenseByMonth} />
               </div>
+              <BudgetMeter
+                budgets={data.budgets}
+                expenses={expenses}
+              />
             </div>
           )}
         </main>
